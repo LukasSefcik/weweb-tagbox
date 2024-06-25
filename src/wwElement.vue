@@ -3,7 +3,7 @@
     <div class="dx-field-label">Add custom items</div>
     <div class="dx-field-value">
       <DxTagBox
-          :items="content.data"
+          :data-source="content.data"
           :value="content.value"
           :accept-custom-value="true"
           display-expr="text"

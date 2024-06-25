@@ -72,6 +72,14 @@ export default {
             }
 
         },
+        readonly: {
+            label: {
+                en: "Readonly"
+            },
+            type: "Boolean",
+            defaultValue: false,
+            section: "settings"
+        },
         itemContainer: {
             hidden: true,
             defaultValue: {
