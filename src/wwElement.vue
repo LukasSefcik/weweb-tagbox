@@ -3,7 +3,7 @@
     <div class="dx-field-label">Add custom items</div>
     <div class="dx-field-value">
       <DxTagBox
-          :items="content.data"
+          :items="dataSource"
           :accept-custom-value="true"
           @customItemCreating="onCustomItemCreating"
       />
@@ -24,6 +24,7 @@ export default {
   },
   data() {
     return {
+      dataSource: [...this.content.data]
     };
   },
   props: {
@@ -33,12 +34,34 @@ export default {
   computed: {},
   methods: {
     onCustomItemCreating(e) {
-      const newValue = e.text;
-      console.log('onCustomItemCreating', newValue);
+      console.log('onCustomItemCreating', e.text);
+
+      if (!e.text) {
+        e.customItem = null;
+        return;
+      }
+
+      const { component, text } = e;
+      const currentItems = component.option('items');
+
+      const newId = currentItems.at(-1).id + 1;
+      const newItem = {
+        id: newId,
+        text: text.trim(),
+      };
+
+      const itemInDataSource = currentItems.find((item) => item.text === newItem.text)
+      if (itemInDataSource) {
+        e.customItem = itemInDataSource;
+      } else {
+        currentItems.push(newItem);
+        component.option('items', currentItems);
+        e.customItem = newItem;
+      }
+
       this.$emit("trigger-event", {
         name: "onCustomItemCreating",
-        event: e,
-        newValue,
+        event: e
       });
     },
   }
