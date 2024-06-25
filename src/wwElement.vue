@@ -5,6 +5,7 @@
       <DxTagBox
           :items="dataSource"
           :accept-custom-value="true"
+          display-expr="text"
           @customItemCreating="onCustomItemCreating"
       />
     </div>
@@ -24,7 +25,7 @@ export default {
   },
   data() {
     return {
-      dataSource: [...this.content.data]
+      dataSource: this.content?.data ? [...this.content.data] : []
     };
   },
   props: {
@@ -41,29 +42,33 @@ export default {
         return;
       }
 
-      const { component, text } = e;
+      const {component, text} = e;
       const currentItems = component.option('items');
+      const trimmedText = text.trim();
 
-      const newId = currentItems.at(-1).id + 1;
-      const newItem = {
-        id: newId,
-        text: text.trim(),
-      };
+      const newItem = this.createNewItem(currentItems, trimmedText);
+      this.addItemToDataSource(currentItems, newItem, component);
 
-      const itemInDataSource = currentItems.find((item) => item.text === newItem.text)
-      if (itemInDataSource) {
-        e.customItem = itemInDataSource;
-      } else {
-        currentItems.push(newItem);
-        component.option('items', currentItems);
-        e.customItem = newItem;
-      }
-
+      e.customItem = newItem;
       this.$emit("trigger-event", {
         name: "onCustomItemCreating",
         event: e
       });
     },
+    createNewItem(currentItems, text) {
+      const newId = currentItems.length > 0 ? currentItems.at(-1).id + 1 : 1;
+      return {
+        id: newId,
+        text: text,
+      };
+    },
+    addItemToDataSource(currentItems, newItem, component) {
+      const itemInDataSource = currentItems.find((item) => item.text === newItem.text);
+      if (!itemInDataSource) {
+        currentItems.push(newItem);
+        component.option('items', currentItems);
+      }
+    }
   }
 };
 </script>
