@@ -7,6 +7,7 @@
           :accept-custom-value="true"
           display-expr="text"
           @customItemCreating="onCustomItemCreating"
+          @value-changed="onValueChanged"
       />
     </div>
   </div>
@@ -68,7 +69,14 @@ export default {
         currentItems.push(newItem);
         component.option('items', currentItems);
       }
-    }
+    },
+    onValueChanged(e) {
+      console.log('onValueChanged', e.value, e.previousValue);
+      this.$emit("trigger-event", {
+        name: "onValueChanged",
+        event: e
+      });
+    },
   }
 };
 </script>
