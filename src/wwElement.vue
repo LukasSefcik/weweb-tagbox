@@ -6,7 +6,7 @@
           :data-source="content.data"
           :value="content.value"
           :accept-custom-value="true"
-          :readonly="content.readonly"
+          :read-only="content.readonly"
           display-expr="text"
           value-expr="id"
           @customItemCreating="onCustomItemCreating"
