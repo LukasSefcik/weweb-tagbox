@@ -3,9 +3,11 @@
     <div class="dx-field-label">Add custom items</div>
     <div class="dx-field-value">
       <DxTagBox
-          :items="dataSource"
+          :items="content.data"
+          :value="content.value"
           :accept-custom-value="true"
           display-expr="text"
+          value-expr="id"
           @customItemCreating="onCustomItemCreating"
           @value-changed="onValueChanged"
       />
@@ -26,7 +28,6 @@ export default {
   },
   data() {
     return {
-      dataSource: this.content?.data ? [...this.content.data] : []
     };
   },
   props: {
