@@ -1,19 +1,14 @@
 <template>
-  <div class="dx-field">
-    <div class="dx-field-label">Add custom items</div>
-    <div class="dx-field-value">
-      <DxTagBox
-          :data-source="content.data"
-          :value="content.value"
-          :accept-custom-value="true"
-          :read-only="content.readonly"
-          display-expr="text"
-          value-expr="id"
-          @customItemCreating="onCustomItemCreating"
-          @value-changed="onValueChanged"
-      />
-    </div>
-  </div>
+  <DxTagBox
+      :data-source="content.data"
+      :value="content.value"
+      :accept-custom-value="true"
+      :read-only="content.readonly"
+      display-expr="text"
+      value-expr="id"
+      @customItemCreating="onCustomItemCreating"
+      @value-changed="onValueChanged"
+  />
 </template>
 
 <script>
@@ -28,8 +23,7 @@ export default {
     DxTooltip,
   },
   data() {
-    return {
-    };
+    return {};
   },
   props: {
     content: {type: Object, required: true},
