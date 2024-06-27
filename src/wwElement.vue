@@ -67,7 +67,7 @@ export default {
       }
     },
     onValueChanged(e) {
-      console.log('onValueChanged', e.value, e.previousValue);
+      console.log('onValueChanged', e);
       this.$emit("trigger-event", {
         name: "onValueChanged",
         event: e
